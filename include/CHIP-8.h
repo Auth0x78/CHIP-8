@@ -18,9 +18,12 @@ public:
 
 	void LoadROMFile(const char* file);
 	void Cycle();
+	void Reset();
 
 	uint8_t key[KEY_COUNT]; // 16 keys (0x0 to 0xF)
 	uint32_t video[VIDEO_WIDTH * VIDEO_HEIGHT]; // 64x32 pixel display
+	bool drawFlag = false; // Flag to indicate if the display needs to be redrawn
+	bool romPresent = false;
 
 private:
 	// Table functions

@@ -135,6 +135,8 @@ void CHIP_8::LoadROMFile(const char* file) {
 		// Free the buffer
 		delete[] buffer;
 	}
+
+	romPresent = true;
 }
 
 void CHIP_8::Cycle(){
@@ -154,6 +156,14 @@ void CHIP_8::Cycle(){
 	// Decrement the sound timer if it's been set
 	if (soundTimer > 0)
 		--soundTimer;
+}
+
+void CHIP_8::Reset() {
+	PC = START_ADDRESS;
+	SP = 0;
+	memset(video, 0, sizeof(video)); // Clear the display
+	memset(key, 0, sizeof(key));
+	memset(stack, 0, sizeof(stack));
 }
 
 void CHIP_8::null() {
@@ -321,6 +331,7 @@ void CHIP_8::RND() {
 }
 
 void CHIP_8::DRW() {
+	drawFlag = true;
 	uint8_t x = (opcode & 0x0F00u) >> 8u;
 	uint8_t y = (opcode & 0x00F0u) >> 4u;
 	uint8_t height = opcode & 0x000Fu;
@@ -339,7 +350,7 @@ void CHIP_8::DRW() {
 				uint16_t y = (yPos + row) % VIDEO_HEIGHT;
 				uint32_t index = x + (y * VIDEO_WIDTH);
 
-				if (video[index] == DISPLAY_COLOR) {
+				if (video[index] != 0) {
 					V[0xF] = 1; // Set collision flag
 				}
 				video[index] ^= DISPLAY_COLOR; // Toggle 32-bit pixel

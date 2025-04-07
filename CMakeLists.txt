@@ -1,6 +1,4 @@
 ﻿# CMakeList.txt : CMake project for CHIP-8, include source and define
-# project specific logic here.
-#
 cmake_minimum_required (VERSION 3.8)
 
 
@@ -10,11 +8,16 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>")
 project ("CHIP-8")
 
 # Add thirdparty libraries
+set(SDL_STATIC ON CACHE BOOL "Build SDL3 as a static library" FORCE)
+set(SDL_SHARED OFF CACHE BOOL "Don't build SDL3 as a shared library" FORCE)
+set(SDL_TEST OFF CACHE BOOL "Don't build SDL3 test programs" FORCE)
+
+add_subdirectory(thirdparty/glad)				#GLAD
 add_subdirectory(thirdparty/SDL-Main)			#window opener
 add_subdirectory(thirdparty/imgui-docking)		#ui
 
 # Define MY_SOURCES to be a list of all the source files for my game 
-file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c")
 
 # Add source to this project's executable.
 add_executable ("${CMAKE_PROJECT_NAME}")
@@ -44,4 +47,4 @@ endif()
 target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include/")
 
 # Link Libraries
-target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE SDL3::SDL3 imgui)
+target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE SDL3::SDL3 glad imgui)
