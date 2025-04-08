@@ -55,7 +55,7 @@ After building the project, you can run the emulator by executing the generated 
 
 
 ```bash
-./chip8 path/to/program.ch8
+./chip8
 ```
 
 ## License
