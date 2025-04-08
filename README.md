@@ -53,10 +53,11 @@ This project is a CHIP-8 emulator developed in C and C++. It aims to accurately 
 
 After building the project, you can run the emulator by executing the generated binary. Ensure you have a CHIP-8 program file to load into the emulator.
 
-
 ```bash
 ./chip8
 ```
+
+An windows with load rom button will be there, click on it and load a CHIP-8 ROM File. Then unselect the PAUSE check button to start emulation.
 
 ## License
 
