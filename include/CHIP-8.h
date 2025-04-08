@@ -4,6 +4,7 @@
 #include <chrono>
 #include <random>
 #include <functional>
+#include <IOLayer.h>
 
 const unsigned int VIDEO_HEIGHT = 32;
 const unsigned int VIDEO_WIDTH = 64;
@@ -14,6 +15,8 @@ const unsigned int DISPLAY_COLOR = 0xFFFFFFFF; // Default display color (R8_G8_B
 
 class CHIP_8 {
 public:
+	friend class IOLayer;
+
 	CHIP_8();
 
 	void LoadROMFile(const char* file);

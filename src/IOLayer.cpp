@@ -3,6 +3,7 @@
 extern bool halt;
 extern int cycleDelay;
 extern int videoScale;
+extern CHIP_8 chip8;
 
 
 IOLayer::IOLayer(char const* title, int width, int height, int textureWidth, int textureHeight) {
@@ -135,8 +136,11 @@ void IOLayer::Render(void* buffer, int pitch, bool* updateTexture, bool romLoade
 		ImGuiWindowFlags_NoResize |
 		ImGuiWindowFlags_NoMove |
 		ImGuiWindowFlags_NoCollapse);
-
-	ImGui::Text("Window 3 - DBG info goes here...");
+	ImGui::Text("Current Opcode: %X", chip8.opcode);
+	ImGui::TextWrapped("V0= 0x%X\tV1= 0x%X\tV2= 0x%X\tV3= 0x%X\tV4= 0x%X\tV5= 0x%X\tV6= 0x%X\tV7= 0x%X\nV8= 0x%X\tV9= 0x%X\tVA= 0x%X\tVB= 0x%X\tVC= 0x%X\tVD= 0x%X\tVE= 0x%X\tVF= 0x%X", chip8.V[0], chip8.V[1], chip8.V[2], chip8.V[3], chip8.V[4], chip8.V[5], chip8.V[6], chip8.V[7], chip8.V[8], chip8.V[9], chip8.V[0xA], chip8.V[0xB], chip8.V[0xC], chip8.V[0xD], chip8.V[0xE], chip8.V[0xF]);
+	ImGui::TextWrapped("PC= 0x%X\tI= 0x%X", chip8.PC, chip8.I);
+	ImGui::TextWrapped("SP= 0x%X\tDT= 0x%X\tST= 0x%X", chip8.SP, chip8.delayTimer, chip8.soundTimer);
+	
 	ImGui::End();
 	
 	// Rendering
